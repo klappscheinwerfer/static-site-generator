@@ -1,3 +1,6 @@
+BINDEST = /usr/local/bin
+MANDEST = /usr/local/man
+
 TARGET = ssg
 
 SRCS  = $(shell find ./src     -type f -name *.cpp)
@@ -18,12 +21,17 @@ $(TARGET): $(OBJS) $(HEADS)
 run: all
 	@./$(TARGET)
 
-.PHONY: depend clean
+.PHONY: depend clean install
 depend:
 	$(CXX) $(INCLUDES) -MM $(SRCS) > $(DEPS)
 	@sed -i -E "s/^(.+?).o: ([^ ]+?)\1/\2\1.o: \2\1/g" $(DEPS)
 
 clean:
 	$(RM) $(OBJS) $(TARGET)
+
+install:
+	install $(TARGET) $(BINDEST)
+	mkdir -p $(MANDEST)/man1
+	install --mode=644 docs/ssg.1 $(MANDEST)/man1/ssg.1
 
 -include $(DEPS)
