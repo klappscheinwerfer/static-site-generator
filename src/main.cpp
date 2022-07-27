@@ -1,6 +1,10 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include <filesystem>
+#include <fstream>
+
+void recursiveCopy (std::filesystem::path src, std::filesystem::path dest);
 
 int main(int argc, char *argv[]) {
 
@@ -28,5 +32,28 @@ int main(int argc, char *argv[]) {
         return 2;
     }
 
+    // Load copylist
+
+    std::vector<std::string> copylist;
+    std::ifstream clist(inputPath + "copylist");
+    if(clist.is_open()) {
+        std::string text;
+        while (getline(clist, text)) {
+            copylist.push_back(text);
+        }
+        clist.close();
+    }
+
+    for(unsigned int i = 0; i < copylist.size(); i++) {
+        std::cout << copylist[i] << "\n";
+    }
+    std::cout.flush();
+
+    //recursiveCopy(inputPath, outputPath);
+
     return 0;
 }
+
+/*void recursiveCopy (std::filesystem::path src, std::filesystem::path dest) {
+    return;
+}*/
