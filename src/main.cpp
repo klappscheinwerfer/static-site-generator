@@ -4,7 +4,7 @@
 #include <filesystem>
 #include <fstream>
 
-void recursiveCopy (std::filesystem::path src, std::filesystem::path dest);
+void deleteDirectoryContents(const std::string& dir_path);
 
 int main(int argc, char *argv[]) {
 
@@ -44,16 +44,24 @@ int main(int argc, char *argv[]) {
         clist.close();
     }
 
-    for(unsigned int i = 0; i < copylist.size(); i++) {
-        std::cout << copylist[i] << "\n";
-    }
-    std::cout.flush();
+    // Clear output folder
+    deleteDirectoryContents(outputPath);
 
-    //recursiveCopy(inputPath, outputPath);
+    // Copy all files in copylist
+
+    for(unsigned int i = 0; i < copylist.size(); i++) {
+        std::filesystem::path ifpath = inputPath + copylist[i];
+        std::filesystem::path ofpath = outputPath + copylist[i];
+        std::filesystem::path pofpath = ofpath.parent_path();
+        std::filesystem::create_directories(pofpath);
+        std::filesystem::copy_file(ifpath, ofpath);
+    }
 
     return 0;
 }
 
-/*void recursiveCopy (std::filesystem::path src, std::filesystem::path dest) {
-    return;
-}*/
+void deleteDirectoryContents(const std::string& dir_path) {
+    for (const auto& entry : std::filesystem::directory_iterator(dir_path)) {
+        std::filesystem::remove_all(entry.path());
+    }
+}
