@@ -4,6 +4,8 @@
 #include <filesystem>
 #include <fstream>
 
+#include "sitetree.hpp"
+
 void deleteDirectoryContents(const std::string& dir_path);
 
 int main(int argc, char *argv[]) {
@@ -32,6 +34,21 @@ int main(int argc, char *argv[]) {
         return 2;
     }
 
+    // Clear output folder
+    deleteDirectoryContents(outputPath);
+
+    // Load site structure
+
+    std::vector<std::vector<std::string>> site;
+    std::ifstream siteFile(inputPath + "site.xml");
+    if(siteFile.is_open()) {
+        std::string text;
+        while (getline(siteFile, text)) {
+            //std::cout << text << "\n";
+        }
+        siteFile.close();
+    }
+
     // Load copylist
 
     std::vector<std::string> copylist;
@@ -39,13 +56,12 @@ int main(int argc, char *argv[]) {
     if(clist.is_open()) {
         std::string text;
         while (getline(clist, text)) {
-            copylist.push_back(text);
+            if (text.at(0) != '#') {
+                copylist.push_back(text);
+            }
         }
         clist.close();
     }
-
-    // Clear output folder
-    deleteDirectoryContents(outputPath);
 
     // Copy all files in copylist
 
