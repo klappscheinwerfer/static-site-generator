@@ -13,4 +13,6 @@ class SiteTree {
 		void setRoot(XMLNode* root);
 
 		XMLNode* getRoot() const;
+
+		void print() const;
 };
