@@ -1,5 +1,12 @@
+# Directories
 .vscode/
-bin/*
-ssg
-*.o
+build/
+
+# Make & CMake
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+
+# Misc
 commands.txt

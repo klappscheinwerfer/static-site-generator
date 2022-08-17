@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.10)
+
+set(SSG_PROJECT_NAME		"SSG")
+set(SSG_VERSION_MAJOR		"0")
+set(SSG_VERSION_MINOR		"0")
+set(SSG_VERSION_PATCH		"1")
+set(SSG_VERSION				"${SSG_VERSION_MAJOR}.${SSG_VERSION_MINOR}.${SSG_VERSION_PATCH}")
+set(SSG_NAME_VERSION		"${SSG_PROJECT_NAME} v${SSG_VERSION} (${SSG_VERSION_REVISION})")
+
+project(${SSG_PROJECT_NAME})
+
+set(SSG_SRC_DIR ${PROJECT_SOURCE_DIR}/src)
+set(SSG_INC_DIR ${PROJECT_SOURCE_DIR}/include)
+set(SSG_TEST_DIR ${PROJECT_SOURCE_DIR}/tests)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+enable_testing()
+
+add_subdirectory(src)
+add_subdirectory (tests)
